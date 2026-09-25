@@ -1,16 +1,17 @@
-import { subjectsColors } from '@/constants';
+import { getSubjectColor } from '@/lib/utils';
 import { getCompanion } from '@/lib/actions/companion.action';
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
+import { auth, currentUser } from '@clerk/nextjs/server';
+import { redirect, notFound } from 'next/navigation';
 import Image from 'next/image';
 import CompanionComponent from '@/components/CompanionComponent';
 import React from 'react'
-import { currentUser } from '@clerk/nextjs/server';
+
 interface CompanionProps {
     params: Promise<{
         id: string;
     }>
 }
+
 const page = async ({ params }: CompanionProps) => {
     const { userId } = await auth();
     if (!userId) {
@@ -19,12 +20,15 @@ const page = async ({ params }: CompanionProps) => {
     const Id = await params;
     const user = await currentUser();
     const companion = await getCompanion(Id.id);
-    console.log(companion)
+    if (!companion) {
+        notFound();
+    }
+
     return (
         <main className='flex w-full max-sm:px-4 '>
             <div className='flex gap-8 px-4 py-4 border-1 border-black rounded-lg'>
-                <div className='rounded-lg w-[72px] h-[72px] justify-center px-4 flex max-sm:hidden' style={{ backgroundColor: subjectsColors[companion.subject] }}>
-                    <Image src={`/icons/${companion.subject}.svg`} width={35} height={35} alt='icon' />
+                <div className='rounded-lg w-[72px] h-[72px] justify-center px-4 flex max-sm:hidden' style={{ backgroundColor: getSubjectColor(companion.subject) }}>
+                    <Image src={`/icons/${companion.subject}.svg`} width={35} height={35} alt={companion.subject || 'icon'} />
                 </div>
                 <div className='flex gap-2 w-full max-md:justify-between'>
 
@@ -41,7 +45,11 @@ const page = async ({ params }: CompanionProps) => {
 
                 </div>
             </div>
-            <CompanionComponent {...companion} userName={user?.username} userImage={user?.imageUrl} />
+            <CompanionComponent
+                {...companion}
+                userName={user?.username || user?.firstName || 'Learner'}
+                userImage={user?.imageUrl || ''}
+            />
 
         </main>
     )

@@ -1,10 +1,9 @@
 'use client'
-import { subjectsColors } from '@/constants'
 import soundwaves from '@/constants/soundwaves.json';
 import Image from 'next/image'
 import { useRef, useEffect, useState } from 'react'
 import { CompanionComponentProps, SavedMessage } from '@/types/index'
-import { cn, configureAssistant } from '@/lib/utils'
+import { cn, configureAssistant, getSubjectColor } from '@/lib/utils'
 import { vapi } from '@/types/vapi'
 import Lottie from 'lottie-react';
 import { LottieRefCurrentProps } from 'lottie-react'
@@ -88,7 +87,7 @@ const CompanionComponent = ({ id, subject, topic, name, userName, userImage, voi
         <section className='flex h-[70vh] flex-col'>
             <section className='flex gap-8 max-sm:flex-col'>
                 <div className='companion-section'>
-                    <div className='companion-avatar ' style={{ backgroundColor: subjectsColors[subject] }}>
+                    <div className='companion-avatar ' style={{ backgroundColor: getSubjectColor(subject) }}>
                         <Image src={`/icons/${subject}.svg`} alt="Image" width={150} height={150} className={cn('max-sm:w-16 transition-opacity duration-500 opacity-100 ', CallStatus === "ACTIVE" && 'opacity-0', CallStatus === 'CONNECTING' && 'animate-pulse')} />
 
 

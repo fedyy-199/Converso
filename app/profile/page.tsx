@@ -24,7 +24,7 @@ const page = async () => {
         <main className=''>
             <section className='flex justify-between gap-6 max-lg:flex-col'>
                 <div className='flex w-1/2 gap-4 max-lg:w-full max-lg:gap-8 max-lg:justify-center'>
-                    <Image src={user.imageUrl} height={90} width={110} className='rounded-lg max-h-[110] max-md:w-[110px] max-md:h-[110px] max-sm:w-[80px] max-sm:h-[80px]' />
+                    <Image src={user.imageUrl} alt={user.fullName || 'Profile picture'} height={90} width={110} className='rounded-lg max-h-[110] max-md:w-[110px] max-md:h-[110px] max-sm:w-[80px] max-sm:h-[80px]' />
                     <div className='flex-col gap-8'>
                         <h2 className='text-4xl font-bold'>{user.fullName}</h2>
                         <p className='font-light'>{user.primaryEmailAddress?.emailAddress}</p>

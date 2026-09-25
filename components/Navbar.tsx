@@ -20,8 +20,9 @@ const Navbar = () => {
                 <Link href="/subscription" className='cursor-pointer'>Pricing</Link>
 
                 <Show when="signed-out">
-                    <SignInButton className='btn-signin' />
-
+                    <SignInButton>
+                        <button className='btn-signin'>Sign In</button>
+                    </SignInButton>
                 </Show>
                 <Show when="signed-in">
                     <UserButton />

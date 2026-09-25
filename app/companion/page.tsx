@@ -1,7 +1,7 @@
 import Companioncard from '@/components/Companioncard';
 import SearchFilter from '@/components/SearchFilter';
 import SearchInput from '@/components/SearchInput';
-import { subjectsColors } from '@/constants';
+import { getSubjectColor } from '@/lib/utils';
 import { GetallCompanions } from '@/lib/actions/companion.action';
 import { SearchParams } from '@/types/index'
 import React from 'react'
@@ -11,9 +11,6 @@ const page = async ({ searchParams }: SearchParams) => {
     const subject = filters.subject ? filters.subject : '';
     const topic = filters.topic ? filters.topic : '';
     const companions = await GetallCompanions({ subject, topic });
-    console.log(companions);
-
-
 
     return (
         <main>
@@ -29,7 +26,7 @@ const page = async ({ searchParams }: SearchParams) => {
 
             </section>
             <section className='companions-grid'>
-                {companions.map((companion) => (
+                {companions?.map((companion) => (
                     <Companioncard
                         key={companion.id}
                         id={companion.id}
@@ -37,7 +34,7 @@ const page = async ({ searchParams }: SearchParams) => {
                         name={companion.name}
                         topic={companion.topic}
                         duration={companion.duration}
-                        color={subjectsColors[companion.subject]}
+                        color={getSubjectColor(companion.subject)}
                     />
                 ))}
             </section>

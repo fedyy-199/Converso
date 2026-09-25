@@ -36,8 +36,7 @@ const GetallCompanions = async ({
     const supabase = await createSupabaseClient();
     let query = supabase.from("Companion").select();
     if (subject && topic) {
-        query = (await query.ilike('subject', `${subject}%`).ilike('topic', `%${topic}%`))
-
+        query = query.ilike('subject', `${subject}%`).ilike('topic', `%${topic}%`);
     }
     else if (subject) {
         query = query.ilike('subject', `%${subject}%`)

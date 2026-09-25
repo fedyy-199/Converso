@@ -75,7 +75,10 @@ export default function Companionform() {
   })
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    const companion = await createCompanion(data);
+    const companion = await createCompanion({
+      ...data,
+      duration: Number(data.duration),
+    });
     if (companion) {
       redirect(`/companion/${companion.id}`);
 
@@ -144,7 +147,7 @@ export default function Companionform() {
                     >
                       <SelectValue placeholder="Select Subject" />
                     </SelectTrigger>
-                    <SelectContent position="item-aligned">
+                    <SelectContent>
 
                       <SelectSeparator />
                       {subjects.map((subject) => (
@@ -208,7 +211,7 @@ export default function Companionform() {
                     >
                       <SelectValue placeholder="Select" className='' />
                     </SelectTrigger>
-                    <SelectContent position="item-aligned">
+                    <SelectContent>
 
                       <SelectSeparator />
                       {Object.entries(voices).map(([key, voice]) => (

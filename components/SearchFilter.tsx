@@ -26,7 +26,8 @@ export default function SearchFilter() {
         setLocalSubject(searchParams.get('subject') || 'all');
     }, [searchParams]);
 
-    const handleValueChange = (value: string) => {
+    const handleValueChange = (value: string | null) => {
+        if (!value) return;
         setLocalSubject(value); // Instantly update the UI
 
         if (value === 'all') {
